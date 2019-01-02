@@ -1,0 +1,60 @@
+{% extends 'webdriver/base.html' %}
+
+{% block title %} json格式化 {% endblock %}
+{% block beforehead %} 
+{% load static %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/jsonFormater.css' %}"/>
+<script type="text/javascript" src="{% static 'js/jsonFormater.js' %}"></script>
+<style>  
+    body { margin:0; font-family:"微软雅黑"; font-size:12px; }  
+    table { border-collapse:collapse; }  
+    table .tdLeft { width:150px; text-align:right; line-height:30px;}  
+    table .tdRight { width:400px; }  
+    table textarea { width:400px; height:100px; }  
+    #container { margin-left:150px; }  
+</style>  
+<script>  
+    function showJson(){  
+        $('table #container').css('display','block');  
+        var options = {  
+            dom: '#container' //对应容器的css选择器  
+        };  
+        var jf = new JsonFormater(options); //创建对象  
+        jf.doFormat($("#jsonContent").val()); //格式化json   
+    };  
+</script> 
+<script type="text/javascript">
+    $(document).ready(function(){
+    $('table #container').css('display','block');  
+        var options = {  
+            dom: '#container' //对应容器的css选择器  
+        };  
+        var jf = new JsonFormater(options); //创建对象  
+        jf.doFormat($("#jsonContent").val()); //格式化json 
+});
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="uk-container uk-grid">
+    <div class="uk-width-1-2">
+    	<table>  
+            <tr>  
+                <td class="tdLeft" nowrap>请输入要展示的Json：</td>  
+                <td class="tdRight"><textarea id="jsonContent" style="height: 600px"></textarea></td>  
+            </tr>  
+            <tr>  
+                <td class="tdLeft"> </td>  
+                <td class="tdRight"><input type="button" value="格式化Json" onClick="showJson()"></td>  
+            </tr>  
+        </table>
+    </div>
+    <div class="uk-width-1-2">
+        <div id="container" style="position:absolute; height:600px; overflow:auto">  
+        </div>
+    </div>   
+	
+</div>
+
+{% endblock %}

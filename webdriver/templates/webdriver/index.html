@@ -1,0 +1,80 @@
+{% extends 'webdriver/base.html' %}
+
+{% block title %} 测试导航首页 {% endblock %}
+{% block beforehead %}
+<script type="text/javascript">
+    $(function(){
+        $(".title li").click(function(){
+            $(this).addClass("uk-active").siblings().removeClass("uk-active");
+            $(".mod.cont").eq($(".title li").index(this)).show().siblings(".mod.cont").hide();
+        });
+    });
+
+</script>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="uk-block uk-padding-top-remove" id="all-environment_info">
+    <div name="short-title" class="uk-text-large uk-text-bold uk-text-center">测试环境汇总</div>
+    <div name="env-tab">
+        <ul class="uk-tab title">
+            {% for tab in tab_list %}
+            {% if forloop.first %}
+            <li class="uk-active"><a href="#">{{tab}}</a></li>
+            {% else %}
+            <li><a href="#">{{tab}}</a></li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    <div name="env-table">
+        <table class="uk-table uk-table-striped uk-table-condensed">
+            <thead>
+            <tr>
+                <th>Env_name</th>
+                <th>Env_url</th>
+                <th>Env_ip</th>
+                <th>Env_database</th>
+                <th>Env_comment</th>
+            </tr>
+            </thead>
+            {% for ENV in env_list %}
+            {% if forloop.first %}
+            <tbody class="mod cont">
+            {% for env in ENV %}
+            <tr>
+                <td>{{ env.env_name }}</td>
+                <td>{{ env.env_url }}</td>
+                <td>{{ env.env_ip }}</td>
+                <td>{{ env.env_db }}</td>
+                <td>{{ env.env_comment }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+            {% else %}
+            <tbody class="mod cont" style="display: none">
+            {% for env in ENV %}
+            <tr>
+                <td>{{ env.env_name }}</td>
+                <td>{{ env.env_url }}</td>
+                <td>{{ env.env_ip }}</td>
+                <td>{{ env.env_db }}</td>
+                <td>{{ env.env_comment }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+            {% endif %}
+            {% endfor %}
+
+
+        </table>
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}

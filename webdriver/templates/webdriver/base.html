@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block meta %}<!-- block meta  -->{% endblock %}
+    <title>{% block title %} {% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/uikit.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/uikit.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/uikit.gradient.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/uikit.gradient.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/webdriver.css' %}"/>
+    <link href="{% static 'img/yjsLogo.jpg' %}" rel="shortcut icon" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> 
+    <script src="{% static 'js/uikit.js' %}"></script>
+    <script src="{% static 'js/uikit.min.js' %}"></script>
+    <script src="{% static 'js/webdriver.js' %}"></script>
+    
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    {% block beforehead %}<!-- before head  -->{% endblock %}
+</head>
+<body>
+	<canvas id="canvas" height="" width="" class="uk-position-bottom"></canvas>
+    <script type="text/javascript" src="{% static 'js/background.js' %}"></script>
+	<header class="site-header">
+		<nav class="tm-navbar uk-navbar uk-navbar-attached">
+			<div class="" id="header">
+				<div class="uk-position-top-left">
+					<a class="uk-navbar-brand" href="{% url 'webdriver:index' %}">
+						<img width="35" src="{% static 'img/yjsLogo.jpg' %}" alt="友金普惠"></img>
+						<span class="uk-text-bold ">友金普惠</span>
+					</a>
+				</div>
+				<div class="uk-navbar-center">
+					<ul class="uk-navbar-nav ">
+						<li class="uk-active "><a href="{% url 'webdriver:index' %}"><i class="uk-icon-home uk-icon-small"></i>测试环境</a></li>
+						<li><a href="{% url 'webdriver:createData' %}"><i class="uk-icon-wrench uk-icon-small"></i>造数据</a></li>
+						<li class="dropdown">
+							<a href="{% url 'webdriver:timestamps' %}" class="dropdown-toggle" data-toggle="dropdown">测试辅助工具<i class="uk-icon-caret-down"></i></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="{% url 'webdriver:timestamps' %}"><i class="uk-icon-clock-o"></i>时间戳转换</a>
+									</li>
+									<li>
+										<a href="{% url 'webdriver:jsonFormat' %}"><i class="uk-icon-check"></i>json格式化</a>
+									</li>
+									<li>
+										<a href="{% url 'webdriver:translator' %}"><i class="uk-icon-book"></i>在线翻译</a>
+									</li>
+								</ul>	
+						</li>
+						
+						<li><a href="{% url 'webdriver:apiTest' %}"><i class="uk-icon-code-fork uk-icon-small"></i>接口调用</a></li>
+						<li><a href="{% url 'webdriver:svnSpace' 1 %}"><i class="uk-icon-folder-open"></i>SVN</a></li>
+						<li><a href="{% url 'webdriver:webUrls' %}"><i class="uk-icon-star "></i>常用网址</a></li>
+					</ul>
+				</div>
+				<div class="uk-position-top-right">
+					<ul class="uk-navbar-nav">
+					   	<li><a href="{% url 'admin:index' %}"><i class="uk-icon-gear (alias)"></i>后台管理系统入口</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+
+<div class="uk-block uk-padding-top-remove" id="body-content">
+{% block content %} 
+{% endblock %}
+
+</div>
+
+
+<footer class="site-footer uk-position-bottom">
+	<div class="uk-block uk-block-secondary " id="footer">
+		<p class="uk-text-center uk-contrast">Copyright © 2018 核心测试导航 - Powered By 核心测试组</p>
+		<p class="uk-text-center uk-contrast">Author: Delo | Email: wudlb@yonyou.com</p>
+	</div>
+</footer>
+</body>
+</html>

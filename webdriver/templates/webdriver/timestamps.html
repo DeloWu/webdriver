@@ -1,0 +1,63 @@
+{% extends 'webdriver/base.html' %}
+
+{% block title %} 时间戳转换 {% endblock %}
+
+{% block content %}
+
+<div class="uk-container uk-grid uk-container-center">
+	<div class="uk-width-1-2" name="timestamps-div">
+		<div class="uk-container-center" >
+			<form class="uk-form" action="{% url 'webdriver:timestamps' %}" method="get">
+				<label>当前时间戳：</label>
+				<input type="text" name="timestamps_now" value="{{ timestamps_now }}">
+				<button class="uk-button">获取当前时间戳</button>
+			</form>
+		</div>
+		<hr class="uk-article-divider">
+		<div class="uk-container-center" >
+			<form class="uk-form" action="{% url 'webdriver:timestamps' %}" method="get">
+				<label for="get_timestamps"></label>
+				<input type="text" id="get_timestamps" name="get_timestamps" value="{{ last_get_timestamps }}" placeholder="时间戳">
+				<button class="uk-button">转换</button>
+				<span>北京时间：</span>
+				<input type="text" name="BJ_time" value="{{ BJ_time }}">
+			</form>
+		</div>
+		<hr class="uk-article-divider">
+		<div class="uk-container-center" >
+			<form class="uk-form" action="{% url 'webdriver:timestamps' %}" method="get">
+				<label for="get_BJ_time"></label>
+				<input type="text" id="get_BJ_time" name="get_BJ_time" value="{{ last_BJ_time }}" placeholder="YYYY-mm-dd HH:MM:SS">
+				<button class="uk-button">转换</button>
+				<span>时间戳：</span>
+				<input type="text" name="format_timestamps" value="{{ format_timestamps }}">
+			</form>
+		</div>
+	</div>
+
+	<div class="uk-width-1-2" name="encode-decode-content">
+		<div name='encode-content'>
+			<form class="uk-form" action="{% url 'webdriver:timestamps' %}" method="get">
+				<label for="get_encode_content"></label>
+				<input type="text" name="get_encode_content" id='get_encode_content' placeholder="请输入需要加密的字段" class="uk-form-width-large" ></input>
+				<button class="uk-button">解析</button>
+			</form>
+		</div>
+		<label>加密结果：</label>
+		<input type="text" name="encode-content" class="uk-form-width-large" value="{{ encode_content }}">
+		<hr class="uk-article-divider">
+		<div name='decode-content'>
+			<form class="uk-form" action="{% url 'webdriver:timestamps' %}" method="get">
+				<label for="get_decode_content"></label>
+				<input type="text" name="get_decode_content" id='get_decode_content' placeholder="请输入需要解密的字段" class="uk-form-width-large" ></input>
+				<button class="uk-button">解析</button>
+			</form>
+		</div>
+		<label>解密结果：</label>
+		<input type="text" name="decode-content" class="uk-form-width-large" value="{{ decode_content }}">
+	</div>
+	
+	<h1>{{ error }}</h1>
+</div>
+
+{% endblock %}

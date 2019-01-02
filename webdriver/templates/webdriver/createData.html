@@ -1,0 +1,74 @@
+{% extends 'webdriver/base.html' %}
+
+{% block title %} 造数据 {% endblock %}
+{% block content %}
+<div name='choice_menu'>
+	<div name='customer_info'>
+		<form class="uk-form">
+		    <fieldset data-uk-margin>
+		        <!-- <legend>自定义数据</legend> -->
+		        <div class="" >
+				<form class="uk-form" action="{% url 'webdriver:createData' %}" method="post">
+					{% csrf_token %}
+					<button class="uk-button uk-button-primary uk-button-small">随机生成用户信息</button>
+				</form>
+				</div>
+				<div class="" id="menu">
+					<form class="uk-form" action="{% url 'webdriver:createData' %}" method="post">
+						{% csrf_token %}
+				        <label for="birthday"><b>用户生日：</b></label>
+				        <input name="birthday" id="birthday" type="text" placeholder="19880101" value="">
+				        <label for="bankName"><b>银行名称：</b></label>
+					    <select name="bankName" id="bankName">
+					        <option value="工商银行">工商银行</option>
+					        <option value="农业银行">农业银行</option>
+					        <option value="中国银行">中国银行</option>
+					        <option value="建设银行">建设银行</option>
+					        <option value="中信银行">中信银行</option>
+					        <option value="光大银行">光大银行</option>
+					        <option value="华夏银行">华夏银行</option>
+					        <option value="广发银行">广发银行</option>
+					        <option value="平安银行">平安银行</option>
+					        <option value="招商银行">招商银行</option>
+					        <option value="民生银行">民生银行</option>
+					        <option value="北京银行">北京银行</option>
+					    </select>
+					    <label for="bankcard_length"><b>银行卡位数：</b><input type="text" name="bankcard_length" id="bankcard_length" placeholder="19" class="uk-form-width-mini"></label><span>  ｜  </span>
+				        <label for="credit_card"> 信用卡<input name="credit_card" id="credit_card" type="checkbox"></label>
+				        <label for="credit_card_length"><b>信用卡位数：</b><input type="text" name="credit_card_length" id="credit_card_length" placeholder="16" class="uk-form-width-mini"></label>
+				        <button class="uk-button uk-button-primary uk-button-small">生成用户信息</button>
+			        </form>
+				</div>
+		    </fieldset>
+
+		</form>
+	</div>
+</div>
+
+<div name='date_field'>
+<table class="uk-table uk-table-hover uk-table-striped uk-table-condensed">
+	<thead>
+		<tr>
+			<th>姓名</th>
+			<th>身份证号</th>
+			<th>手机号</th>
+			<th>银行卡号</th>
+			<th>银行名称</th>
+		</tr>
+	</thead>
+    <tbody>
+    {% for loop in customer_info_list %}
+		<tr>
+            <td>{{ loop.0 }}</td>
+            <td>{{ loop.1 }}</td>
+            <td>{{ loop.2 }}</td>
+            <td>{{ loop.3 }}</td>
+            <td>{{ loop.4 }}</td>
+        </tr>
+        {% endfor %}
+
+</table>
+	
+</div>
+
+{% endblock %}

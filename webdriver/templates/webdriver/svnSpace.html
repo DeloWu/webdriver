@@ -1,0 +1,101 @@
+{% extends 'webdriver/base.html' %}
+
+{% block title %} SVN {% endblock %}
+{% block beforehead %} 
+{% load static %}
+<script type="text/javascript" src="{% static 'js/components/pagination.js' %}"></script>
+<script type="text/javascript">
+function isNull(){
+    if (document.getElementById('author').value == ''){
+        alert("上传者姓名不能为空！");
+    }
+}
+</script>
+<style>
+#resetButton{
+    position:relative;
+    top:-28px;
+    left: 220px;
+}
+</style>
+<script type="text/javascript">
+    $(document).ready(function(){
+    $('[data-uk-pagination]').on('select.uk.pagination', function(e, pageIndex){
+        var page = pageIndex+1;
+        var target_url = 'http://localhost:8000/webdriver/svnSpace/'+ page +'/'
+    window.location.href = target_url;
+});
+});
+</script>
+
+
+
+{% endblock %}
+
+{% block content %}
+<div class="uk-grid" name="choice_menu">
+    <div class="uk-width-1-4">
+        <div name="upload-div">
+            <form method="post" action="{% url 'webdriver:upload' 1 %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="choice_file"> 上传文件 </label>
+                <input type="file" name="myfile" id="choice_file">
+                <label for="uploader" id="uploader">上传者：</label><input type="text" name="uploader" style="width: 80px" id="author">
+                <p><b>{{ upload_status }}</b></p>
+                <button class="uk-button  uk-button-primary uk-button-small" id="fileSubmit" onclick="isNull()"  >上传</button>
+            </form>
+        </div>
+        <br />
+        <br />
+        <div name="search-div">
+            <form method="get" action="{% url 'webdriver:searchFile' %}">
+                <label for="searchFileName">文件名：</label><input type="text" name="searchFileName" id="searchFileName" value="{{ lastFileName }}" style="width: 100px">
+                <button class="uk-button  uk-button-primary uk-button-small">搜索</button>
+            </form>
+            <form method="get" action="{% url 'webdriver:svnSpace' 1 %}">
+                <button id="resetButton">重置</button>
+            </form>
+        </div>
+    </div>
+    <div class="uk-width-3-5">
+        <table class="uk-table uk-table-hover uk-table-striped uk-table-condensed">
+            <thead>
+            <tr>
+                <th>文件名</th>
+                <th>文件大小</th>
+                <th>上传者</th>
+                <th>上传时间</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file in  objects_list %}
+            <tr>
+                <td>{{ file.file_name }}</td>
+                <td>{{ file.file_size }}</td>
+                <td>{{ file.file_author }}</td>
+                <td>{{ file.file_upload_time }}</td>
+                <td>
+                <form method="post" action="{% url 'webdriver:download' %}">
+                {% csrf_token %}
+                    <input type="text" name="file_name" value="{{ file.file_name }}" style="display:none">
+                    <input type="text" name="download_path" value="{{ file.file_path }}" style="display:none">
+                    <button>下载</button>
+                </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+
+        </table>
+        <div id="pagination-div">
+            <ul class="uk-pagination" data-uk-pagination="{items:{{objects_sum}}, itemsOnPage:15,currentPage:{{ page }}  }" ></ul>
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}
